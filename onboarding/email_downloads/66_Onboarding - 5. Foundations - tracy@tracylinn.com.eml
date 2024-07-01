@@ -1,0 +1,251 @@
+Return-path: <mailer@longstoryshortmarketing.com>
+Envelope-to: onboarding@2acrestudios.com
+Delivery-date: Sat, 02 Dec 2023 13:52:41 +0000
+Received: from chir111.websitehostserver.net ([108.178.43.178])
+	by vps42391.mylogin.co with esmtps  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96.1)
+	(envelope-from <mailer@longstoryshortmarketing.com>)
+	id 1r9QQD-0002cT-1L
+	for onboarding@2acrestudios.com;
+	Sat, 02 Dec 2023 13:52:41 +0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=longstoryshortmarketing.com; s=default; h=Content-Transfer-Encoding:
+	Content-Type:MIME-Version:Message-ID:Subject:From:To:Date:Sender:Reply-To:Cc:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=cU1DGtOuJGGPCVVmqA5NIaa/r4Wt2c7GdatN+LL0Vto=; b=RhWhr+19z8gBke2eSjZQbHd0xx
+	DfsGHVva8u8uoFQ4pN6GxeTzCJ5F9U6oVWWRX809zZTtGtMvPpsRM5/ml1j6RjVezZErW3wxwGuZc
+	Vj8oapXbSWU3AKbHolvjSdhBurlWWlBvDyxYRX78zLfxYUoGxq1qHECLOmWycOytYnmBEm8GW4pzI
+	Pv0vkeVwCoS1YjOwHujCXzzag5si9MIeMVCYnaOVbLrUdl0J6QQ0vTUCxTBvttuPd+/kSAcXIME31
+	8J/05teRovyDwiHLekaVbwYFP47di8IKY0ucdeu53vJpjRNdlzzVMGvbxy1RBIaSLXbxowg7swEb/
+	ucZ9hMmQ==;
+Received: from [108.178.43.178] (port=36206 helo=longstoryshortmarketing.com)
+	by chir111.websitehostserver.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <mailer@longstoryshortmarketing.com>)
+	id 1r9QQD-0000yW-0L
+	for onboarding@2acrestudios.com;
+	Sat, 02 Dec 2023 07:52:40 -0600
+Date: Sat, 2 Dec 2023 13:52:38 +0000
+To: onboarding@2acrestudios.com
+From: Long Story Short Marketing <mailer@longstoryshortmarketing.com>
+Subject: Onboarding - 5. Foundations - tracy@tracylinn.com
+Message-ID: <YlVbNS0pSxI5ZF0wutIeecwF8E0ajoMYaC8CribhM@longstoryshortmarketing.com>
+X-Mailer: WPMailSMTP/Mailer/smtp 3.10.0
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - chir111.websitehostserver.net
+X-AntiAbuse: Original Domain - 2acrestudios.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - longstoryshortmarketing.com
+X-Get-Message-Sender-Via: chir111.websitehostserver.net: authenticated_id: mailer@longstoryshortmarketing.com
+X-Authenticated-Sender: chir111.websitehostserver.net: mailer@longstoryshortmarketing.com
+
+<html>
+	<head>
+		<title>Onboarding - 5. Foundations - tracy@tracylinn.com</title>
+	</head>
+	<body>
+		<table width="99%" border="0" cellpadding="1" cellspacing="0" bgcolor="#EAEAEA"><tr><td>
+                            <table width="100%" border="0" cellpadding="5" cellspacing="0" bgcolor="#FFFFFF">
+                            <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>Provide a general description of your current clients.</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">I have 1 man and 6 women- Middle aged, mostly 30 lbs overweight or more, with a desire to be more healthy</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>Briefly describe an ideal client you already have, that you would like to have more of.</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">A 50 year old successful woman who will dive in and do what it takes to get results. They have a strong why!</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>Who are your competitors? List your top 3, with links to their websites:</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">Weight watchers-https://www.weightwatchers.com/<br />
+<br />
+Noom-https://www.noom.com/<br />
+<br />
+Beyond body-https://woman.beyondbody.me/</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>Do you have a specific niche or specialization you market directly to?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">Yes</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>Do you check the rates and offers of your competitors?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">Yes</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>Tell us more! Who are your targeted markets?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">Middle aged men and women who are ready to take action for their health</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>How are you communicating with your targeted markets?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">Not much at all</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>Why do your customers choose to purchase from you instead of your competitors?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">I am a small boutique experience, hands on, that uses DNA to determine what you need</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>What do your current customers most love about your business?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">It is a very personalized experience.</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>What do your current customers most love about your product/service?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">It is unique and they get a lot of support.</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>What do your current customers complain about regarding your products or services?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">Too much information at one time- I have changed that. I am making adjustments per their responses to questionnaires.</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>How do your products/services positively change your customers’ lives?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">They can look forward to health instead of sickness in their golden years. Less expensive drugs, less fear of what the doctor will say.</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>What are the core values or guiding principles for your business?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">Every person has the ability to change their health when they create a healthy lifestyle. This includes mental, physical, emotional and nutritional.</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>What are 3 keywords that sum up the value you bring to your clients/ customers?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">Confidence, Clarity &amp; Vitality</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>Are there any slogans or taglines you use?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">Not yet- I do use the vision of driving a car down the road to vitality and confidence.</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>If your brand were a person, what would they be like?</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;">If my brand were a person, they would be a caring, reliable and dynamic coach who motivates each client in a positive way using cutting edge science as a guide on the journey to good health.</font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#EAF2FA">
+		                                    <td colspan="2">
+		                                        <font style="font-family: sans-serif; font-size:12px;"><strong>Email</strong></font>
+		                                    </td>
+		                               </tr>
+		                               <tr bgcolor="#FFFFFF">
+		                                    <td width="20">&nbsp;</td>
+		                                    <td>
+		                                        <font style="font-family: sans-serif; font-size:12px;"><a href='mailto:tracy@tracylinn.com'>tracy@tracylinn.com</a></font>
+		                                    </td>
+		                               </tr>
+		                               </table>
+                        </td>
+                   </tr>
+               </table>
+	</body>
+</html>
+
