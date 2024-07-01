@@ -15,10 +15,10 @@ from onboarding_workflow import run_onboarding_workflow
 from check_domain import run_domain_checker
 from task_management import run_task_management
 
-st.set_page_config(page_title="Team Tools", page_icon="🛠️", layout="wide")
+st.set_page_config(page_title="TeamWork", page_icon="🐴", layout="wide")
 
 def main():
-    st.sidebar.title("🛠️ Team Tools")
+    st.sidebar.title("🐴 TeamWork")
     
     # Create a radio button for navigation
     page = st.sidebar.radio("Choose a tool:", ["Leads", "Onboarding", "Domains", "Task Management"])
