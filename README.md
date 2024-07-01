@@ -11,7 +11,7 @@ TeamWork is an internal tool designed to help team members manage various tasks 
 
 ## Installation
 
-<img src="https://2acrestudios.com/wp-content/uploads/2024/07/00007-872985090.png" style="max-width: 300px;" align="right" />
+<img src="https://2acrestudios.com/wp-content/uploads/2024/07/00007-872985090.png" style="width: 300px;" align="right" />
 
 1. Clone the repository:
 
