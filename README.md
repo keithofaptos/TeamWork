@@ -1,8 +1,10 @@
 # 🐴 TeamWork
 
+<img src="https://2acrestudios.com/wp-content/uploads/2024/07/00007-872985090.png" style="width: 300px;" align="right" />
+
 TeamWork is an internal tool designed to help team members manage various tasks such as generating leads, managing onboarding workflows, checking domain availability, and managing tasks. This app integrates multiple functionalities into a single Streamlit interface for easy access and use.
 
-## Features
+**Features**
 
 - **🎯 Lead Generator**: Generate business leads based on provided keywords and location.
 - **🚀 Onboarding Workflow**: Manage and analyze onboarding workflows using email data.
@@ -10,8 +12,6 @@ TeamWork is an internal tool designed to help team members manage various tasks 
 - **🗂️ Task Management**: Manage tasks, assign them to team members, and track their progress.
 
 ## Installation
-
-<img src="https://2acrestudios.com/wp-content/uploads/2024/07/00007-872985090.png" style="width: 300px;" align="right" />
 
 1. Clone the repository:
 
