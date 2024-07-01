@@ -12,6 +12,8 @@ import pandas as pd
 from io import StringIO
 import matplotlib.pyplot as plt
 from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
+import folium
+from streamlit_folium import st_folium
 
 CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.json")
 OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "data/compiled_business_listing_data.csv")
@@ -70,7 +72,7 @@ def plot_keywords(data):
     fig, ax = plt.subplots()
     fig.patch.set_facecolor('#0e1117')
     ax.set_facecolor('#0e1117')
-    keywords_count.plot(kind='barh', ax=ax, color='skyblue')
+    keywords_count.plot(kind='barh', ax=ax, color='green')
     ax.set_title('Keywords Distribution', color='white')
     ax.set_xlabel('Count', color='white')
     ax.set_ylabel('Keywords', color='white')
@@ -79,20 +81,37 @@ def plot_keywords(data):
     st.pyplot(fig)
 
 def get_lat_long_from_city_state(city, state):
+    if not city or not state:
+        st.warning("City and State must be provided.")
+        return None
+
+    headers = {
+        'User-Agent': 'MyApp/1.0 (myemail@example.com)',
+        'Referer': 'http://yourwebsite.com'
+    }
+    
     try:
         response = requests.get(
-            f"https://nominatim.openstreetmap.org/search?city={city}&state={state}&format=json"
+            f"https://nominatim.openstreetmap.org/search?city={city}&state={state}&format=json&email=myemail@example.com",
+            headers=headers
         )
+        response.raise_for_status()
         data = response.json()
         if data:
             latitude = data[0].get("lat", "")
             longitude = data[0].get("lon", "")
-            return f"{latitude},{longitude}"
+            return float(latitude), float(longitude)
         else:
             st.warning("Location not found. Using auto-geocoding.")
             return None
+    except requests.exceptions.RequestException as e:
+        st.error(f"HTTP error occurred: {e}")
+        return None
+    except json.decoder.JSONDecodeError:
+        st.error(f"Error decoding JSON response: {response.text}")
+        return None
     except Exception as e:
-        st.error(f"Error getting latitude and longitude for {city}, {state}: {e}")
+        st.error(f"Unexpected error: {e}")
         return None
 
 def get_user_location(location_type, city=None, state=None, location=None):
@@ -101,7 +120,7 @@ def get_user_location(location_type, city=None, state=None, location=None):
             user_location = geocoder.ip('me')
             if user_location.latlng:
                 latitude, longitude = user_location.latlng
-                return f"{latitude},{longitude}"
+                return latitude, longitude
             else:
                 st.warning("Unable to determine user's location.")
         except Exception as e:
@@ -109,10 +128,15 @@ def get_user_location(location_type, city=None, state=None, location=None):
     elif location_type == "City and State":
         return get_lat_long_from_city_state(city, state)
     elif location_type == "Latitude and Longitude":
-        return location
+        try:
+            latitude, longitude = map(float, location.split(","))
+            return latitude, longitude
+        except ValueError:
+            st.warning("Invalid latitude and longitude format.")
+            return None
     
     st.warning("Using default location: Washington, PA")
-    return "40.1740,-80.2462"  # Default to Washington, PA if all else fails
+    return 40.1740, -80.2462  # Default to Washington, PA if all else fails
 
 def get_website_from_google_search(business_name, API_KEY, CSE_ID):
     try:
@@ -329,7 +353,7 @@ def run_lead_generator():
             st.success("API settings saved!")
 
     # Main app layout
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns([1, 1, 1])
 
     with col1:
         location_type = st.radio("Choose location input method:", 
@@ -342,36 +366,34 @@ def run_lead_generator():
             state = st.text_input("Enter your state:")
         elif location_type == "Latitude and Longitude":
             location = st.text_input("Enter your location as latitude,longitude:")
+        seed_keyword = st.text_input("Enter a seed keyword for variations:")
+        num_keywords = st.number_input("Number of keyword variations", min_value=1, max_value=50, value=10)
 
     with col2:
         radius = st.slider("Search radius (in meters)", 1000, 50000, 50000, 1000)
-
-    # Four-column layout for business search parameters
-    col1, col2, col3, col4 = st.columns(4)
-
-    with col1:
-        seed_keyword = st.text_input("Enter a seed keyword for variations:")
-    with col2:
         business_type = st.selectbox("Select a type of business (Optional):", 
-                                     ["", "accounting", "airport", "amusement_park", "aquarium", "art_gallery", "atm", "bakery", "bank", "bar", "beauty_salon", "bicycle_store", "book_store", "bowling_alley", "bus_station", "cafe", "car_dealership", "car_rental", "car_repair", "car_wash", "casino", "cemetery", "child_care", "clothing_store", "convenience_store", "courthouse", "dentist", "department_store", "doctor", "electrician", "electronics_store", "embassy", "employment_agency", "entertainment_complex", "event_space", "financial_advisor", "florist", "food_court", "funeral_home", "furniture_store", "gas_station", "general_contractor", "grocery_or_supermarket", "gym", "hair_salon", "hardware_store", "health_spa", "home_goods_store", "hospital", "hotel", "insurance_agency", "jewelry_store", "laundry_mat", "lawyer", "library", "liquor_store", "local_government_office", "locksmith", "lodging", "meal_delivery", "meal_takeaway", "mechanic", "movie_theater", "museum", "night_club", "painter", "park", "pharmacy", "physiotherapist", "plumber", "police_station", "post_office", "primary_school", "real_estate_agency", "restaurant", "roofer", "school", "secondary_school", "shopping_mall", "spa", "stadium", "storage", "store", "subway_station", "supermarket", "taxi_stand", "tourist_attraction", "train_station", "university", "veterinarian", "zoo"])
-    with col3:
-        num_keywords = st.number_input("Number of keyword variations", min_value=1, max_value=50, value=10)
-    with col4:
+            ["", "accounting", "airport", "amusement_park", "aquarium", "art_gallery", "atm", "bakery", "bank", "bar", "beauty_salon", "bicycle_store", "book_store", "bowling_alley", "bus_station", "cafe", "car_dealership", "car_rental", "car_repair", "car_wash", "casino", "cemetery", "child_care", "clothing_store", "convenience_store", "courthouse", "dentist", "department_store", "doctor", "electrician", "electronics_store", "embassy", "employment_agency", "entertainment_complex", "event_space", "financial_advisor", "florist", "food_court", "funeral_home", "furniture_store", "gas_station", "general_contractor", "grocery_or_supermarket", "gym", "hair_salon", "hardware_store", "health_spa", "home_goods_store", "hospital", "hotel", "insurance_agency", "jewelry_store", "laundry_mat", "lawyer", "library", "liquor_store", "local_government_office", "locksmith", "lodging", "meal_delivery", "meal_takeaway", "mechanic", "movie_theater", "museum", "night_club", "painter", "park", "pharmacy", "physiotherapist", "plumber", "police_station", "post_office", "primary_school", "real_estate_agency", "restaurant", "roofer", "school", "secondary_school", "shopping_mall", "spa", "stadium", "storage", "store", "subway_station", "supermarket", "taxi_stand", "tourist_attraction", "train_station", "university", "veterinarian", "zoo"])
         max_results = st.number_input("Maximum number of results per keyword", min_value=1, max_value=60, value=1)
+
+    with col3:
+        location = get_user_location(location_type, city, state, location)
+        if location:
+            m = folium.Map(location=location, zoom_start=12)
+            folium.Marker(location=location).add_to(m)
+            st_folium(m, width=500, height=300)
 
     if st.button("Generate Leads"):
         if not API_KEY or not CSE_ID:
             st.error("Please enter all required API keys in the sidebar.")
         else:
-            location = get_user_location(location_type, city, state, location)
             with st.spinner("Generating keywords..."):
                 keywords = generate_keywords(seed_keyword, num_keywords)
                 st.write("Generated Keywords:", keywords)
 
             with st.spinner("Generating leads..."):
-                all_results = generate_leads(keywords, location, API_KEY, CSE_ID, business_type, radius, max_results)
+                all_results = generate_leads(keywords, f"{location[0]},{location[1]}", API_KEY, CSE_ID, business_type, radius, max_results)
                 append_to_csv(all_results, OUTPUT_FILE)
-                st.experimental_rerun()  # Rerun the script to refresh the UI with updated data
+                st.success("Leads generated successfully!")  # Add a success message instead of rerunning
 
     # Load existing data
     existing_data = load_existing_data(OUTPUT_FILE)
@@ -381,15 +403,26 @@ def run_lead_generator():
     grid_options = GridOptionsBuilder.from_dataframe(existing_data)
     grid_options.configure_default_column(editable=True)
     grid_options = grid_options.build()
-    edited_data = AgGrid(existing_data, gridOptions=grid_options, update_mode="value_changed", columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS)
+    
+    # Use st.empty() to create a placeholder for the AgGrid
+    grid_placeholder = st.empty()
+    
+    # Display the AgGrid in the placeholder
+    with grid_placeholder:
+        edited_data = AgGrid(existing_data, gridOptions=grid_options, update_mode="value_changed", columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS)
 
     # Save edited data
-    if edited_data['data'].equals(existing_data):
-        st.write("No changes to save.")
-    else:
-        edited_df = pd.DataFrame(edited_data['data'])
-        edited_df.to_csv(OUTPUT_FILE, index=False)
-        st.success("Changes saved!")
+    if st.button("Save Changes"):
+        if edited_data['data'].equals(existing_data):
+            st.write("No changes to save.")
+        else:
+            edited_df = pd.DataFrame(edited_data['data'])
+            edited_df.to_csv(OUTPUT_FILE, index=False)
+            st.success("Changes saved!")
 
     # Plot keywords
     plot_keywords(existing_data)
+
+# Run the lead generator application
+if __name__ == "__main__":
+    run_lead_generator()
