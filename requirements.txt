@@ -1,0 +1,14 @@
+streamlit
+requests
+beautifulsoup4
+pandas
+geocoder
+psutil
+matplotlib
+st_aggrid
+docx
+html2text
+PyPDF2
+python-docx
+tldextract
+whois
