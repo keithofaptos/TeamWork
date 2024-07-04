@@ -20,6 +20,7 @@ from email.parser import BytesParser
 from email.policy import default
 import requests
 import PyPDF2
+from ollama_utils import get_available_models  # Import the function
 
 # Load configuration
 @st.cache_resource
@@ -54,14 +55,14 @@ DOCS_FOLDER = os.path.join(os.path.dirname(__file__), 'docs')
 HEADER_TEMPLATE = os.path.join(os.path.dirname(__file__), 'header_long_story_short.docx')
 
 # Ollama Setup
-model = 'llama3:8b-instruct-fp16'
+default_model = 'llama3:8b-instruct-fp16'
 ollama_url = 'http://localhost:11434/api/generate'
 
 # Streamlit app
 st.title("Onboarding GAP Analysis Generator")
 
 # Workflow Execution
-def run_workflow():
+def run_workflow(selected_model, temperature):
     status_placeholder = st.empty()
     progress_bar = st.progress(0)
     
@@ -99,7 +100,7 @@ def run_workflow():
         
         mail.close()
         mail.logout()
-        st.success("Email check and download complete!")
+        st.success("🟢 Email check and download complete!")
 
     def extract_email_and_sequence_from_filename(filename):
         email_match = re.search(r'[\w\.-]+@[\w\.-]+', filename)
@@ -288,7 +289,7 @@ def run_workflow():
             doc.save(doc_filename)
             update_status(f"Saved {doc_filename}", (i + 1) / len(email_files_map))
         
-        st.success("Email compilation complete!")
+        st.success("🟢 Email compilation complete!")
 
     def read_word_document(file_path):
         doc = docx.Document(file_path)
@@ -299,7 +300,7 @@ def run_workflow():
             reader = PyPDF2.PdfReader(file)
             return '\n'.join([page.extract_text() for page in reader.pages])
 
-    def analyze_with_ollama(content, prompt_template, model=model, max_tokens=300):
+    def analyze_with_ollama(content, prompt_template, model=default_model, max_tokens=300):
         prompt = prompt_template.replace("{content}", content)
         
         def generate_response(prompt, context=[]):
@@ -346,7 +347,7 @@ def run_workflow():
             elif file.endswith('.pdf'):
                 content = read_pdf_document(file_path)
             
-            analysis_generator = analyze_with_ollama(content, prompt_template)
+            analysis_generator = analyze_with_ollama(content, prompt_template, model=selected_model, max_tokens=temperature)
             
             analysis_text = ""
             st.write_stream(analysis_generator)
@@ -358,7 +359,7 @@ def run_workflow():
             
             update_status(f"Analysis report created: {analysis_file_path}", (i + 1) / len(files))
         
-        st.success("GAP report generation complete!")
+        st.success("🟢 GAP report generation complete!")
 
     # Run all steps
     check_and_download_emails()
@@ -367,20 +368,27 @@ def run_workflow():
 
 def run_onboarding_workflow():
     # Sidebar for configuration
-    with st.sidebar.expander("API Configuration", expanded=False):
-        IMAP_SERVER = st.text_input("Enter IMAP Server", value=config.get("IMAP_SERVER", ""))
-        EMAIL_ADDRESS = st.text_input("Enter Email Address", value=config.get("EMAIL_ADDRESS", ""))
-        PASSWORD = st.text_input("Enter Password", value=config.get("PASSWORD", ""), type="password")
+    with st.sidebar.expander("Mail Server Configuration", expanded=False):
+        IMAP_SERVER = st.text_input("Enter IMAP Server", value=config.get("IMAP_SERVER", ""), key="imap_server")
+        EMAIL_ADDRESS = st.text_input("Enter Email Address", value=config.get("EMAIL_ADDRESS", ""), key="email_address")
+        PASSWORD = st.text_input("Enter Password", value=config.get("PASSWORD", ""), type="password", key="password")
 
-        if st.button("Save API Settings"):
+        if st.button("Save Settings", key="save_api_settings"):
             save_config(IMAP_SERVER, EMAIL_ADDRESS, PASSWORD)
-            st.success("API settings saved!")
+            st.success("🟢 API settings saved!")
 
-    if st.button("Run Workflow"):
-        run_workflow()
+    # Sidebar for Model Selection
+    with st.sidebar.expander("Model Settings", expanded=True):
+        available_models = get_available_models()
+        selected_model = st.selectbox("Select Model for Analysis:", available_models, index=available_models.index(default_model), key="select_model")
+        temperature = st.slider("Select Temperature for Analysis:", 0.0, 1.0, 0.2, 0.1, key="temperature_slider")
+
+    if st.button("🏃‍♀️🏃‍♂️💨 Run Workflow", key="run_workflow"):
+        run_workflow(selected_model, temperature)
+        st.balloons()
 
     # Display Results
-    st.header("Results")
+    st.header("🌟 Results")
     if os.path.exists(DOCS_FOLDER):
         st.subheader("Generated Documents:")
         for file in os.listdir(DOCS_FOLDER):
@@ -388,9 +396,10 @@ def run_onboarding_workflow():
                 file_path = os.path.join(DOCS_FOLDER, file)
                 with open(file_path, "rb") as f:
                     st.download_button(
-                        label=f"Download {file}",
+                        label=f"📥 Download {file}",
                         data=f,
-                        file_name=file
+                        file_name=file,
+                        key=f"download_{file}"
                     )
     else:
         st.write("No documents generated yet.")
@@ -400,3 +409,5 @@ def run_onboarding_workflow():
         os.makedirs(LOCAL_FOLDER)
     if not os.path.exists(DOCS_FOLDER):
         os.makedirs(DOCS_FOLDER)
+
+run_onboarding_workflow()
