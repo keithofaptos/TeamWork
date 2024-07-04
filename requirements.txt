@@ -6,6 +6,7 @@ colorama
 docx
 folium
 geocoder
+html2text
 idna
 lxml
 matplotlib
