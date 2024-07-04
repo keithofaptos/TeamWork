@@ -19,6 +19,7 @@ psutil
 pydantic
 PyPDF2
 python-dateutil
+python-docx
 pytz
 ratelim
 requests
