@@ -55,7 +55,7 @@ DOCS_FOLDER = os.path.join(os.path.dirname(__file__), 'docs')
 HEADER_TEMPLATE = os.path.join(os.path.dirname(__file__), 'header_long_story_short.docx')
 
 # Ollama Setup
-default_model = 'llama3:8b-instruct-fp16'
+default_model = 'mistral:instruct'
 ollama_url = 'http://localhost:11434/api/generate'
 
 # Streamlit app
