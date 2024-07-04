@@ -26,6 +26,7 @@ requests-oauthlib
 six
 soupsieve
 streamlit
+streamlit-aggrid
 streamlit-extras
 streamlit-folium
 streamlit-option-menu
