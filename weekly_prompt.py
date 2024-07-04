@@ -273,6 +273,9 @@ def save_email_as_eml(email_content, filename):
 
 # Create a function to run the weekly prompt script
 def run_weekly_prompt():
+    # Initialize session state variables
+    init_session_state()  # Call the initialization function
+
     # Initialize database
     init_db()
 
