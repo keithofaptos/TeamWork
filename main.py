@@ -1,3 +1,4 @@
+# main.py
 import streamlit as st
 import sys
 import os
@@ -22,6 +23,7 @@ from onboarding_workflow import run_onboarding_workflow
 from check_domain import run_domain_checker
 from task_management import run_task_management
 from weekly_prompt import run_weekly_prompt  # Import the new function
+from agent_builder import run_agent_builder  # Import the new function
 
 def check_secret_key(file_path, expected_key):
     if os.path.exists(file_path):
@@ -97,7 +99,27 @@ def main():
 
     elif selected == "Prompts":
         st.title("✨ Weekly Prompts")
-        run_weekly_prompt()
+        submenu = option_menu(
+            menu_title="Prompts",
+            options=["Agent Builder", "Weekly Prompts"],
+            icons=["calendar", "robot"],
+            menu_icon="star",
+            default_index=0,
+            orientation="horizontal",
+            styles={
+                "container": {"padding": "0!important", "background-color": "#333"},
+                "icon": {"color": "orange", "font-size": "20px"},
+                "nav-link": {"font-size": "14px", "color": "#FFF", "text-align": "center", "margin": "0px", "--hover-color": "#444"},
+                "nav-link-selected": {"background-color": "#444"},
+            }
+        )
+
+        if submenu == "Weekly Prompts":
+            st.title("✨ Weekly Prompts")
+            run_weekly_prompt()
+        elif submenu == "Agent Builder":
+            st.title("🤖 Agent Builder")
+            run_agent_builder()
 
     elif selected == "Onboarding":
         st.title("🚀 Onboarding Workflow")
