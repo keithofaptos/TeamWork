@@ -98,7 +98,6 @@ def main():
         run_lead_generator()
 
     elif selected == "Prompts":
-        st.title("✨ Weekly Prompts")
         submenu = option_menu(
             menu_title="Prompts",
             options=["Agent Builder", "Weekly Prompts"],
