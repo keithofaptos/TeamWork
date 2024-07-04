@@ -238,12 +238,12 @@ def get_rating(business_name, API_KEY):
     return rating
 
 def generate_keywords(seed_keyword, num_keywords):
-    prompt = f"Remember you are writing keywords into a CSV file format. Without numbering or extra quotes, one keyword per line. Only generate the list of words. Do NOT include a title or any kind of label, or definition, or explanation, just the list. You are generating keywords for a business lead search. So be mindful that the user expects results that would be related to their seed keyword in relation to local businesses. Generate {num_keywords} keyword variations for: {seed_keyword}"
+    prompt = f"Remember you are writing {num_keywords} keyword(s) into a CSV file format. Without numbering or extra quotes, one keyword per line. Only generate the list of words. Do NOT include a title or any kind of label, or definition, or explanation, just the list. You are generating {num_keywords} keyword(s) for a business lead search. So be mindful that the user expects results that would be related to their seed keyword in relation to local businesses. Generate {num_keywords} keyword variations for: {seed_keyword}. Come up with {num_keywords} better keyword(s)."
     
     try:
         response = requests.post(
             'http://localhost:11434/api/generate',
-            json={'model': 'llama3:8b-instruct-fp16', 'prompt': prompt, 'context': []},
+            json={'model': 'mistral:instruct', 'prompt': prompt, 'context': []},
             stream=True
         )
         response.raise_for_status()
@@ -337,20 +337,42 @@ def append_to_csv(new_results, output_file):
         new_data = pd.DataFrame(new_results, columns=["Name", "Address", "Types", "Website", "Email", "Phone Number", "Rating", "Business Type", "Keyword"])
         new_data.drop_duplicates().to_csv(output_file, index=False)
 
+# Load available models
+@st.cache_data  # Cache the list of available models
+def get_available_models():
+    response = requests.get(f"http://localhost:11434/api/tags")
+    response.raise_for_status()
+    models = [
+        model["name"]
+        for model in response.json()["models"]
+        if "embed" not in model["name"]
+    ]
+    return models
+
 def run_lead_generator():
     # Load existing configuration
     config = load_config()
 
     # Sidebar for API keys and configuration
     with st.sidebar.expander("API Configuration", expanded=False):
-        if st.button("❓"):
+        if st.button("❓", key="instructions_button"):
             show_instructions()
         API_KEY = st.text_input("Enter Google Maps API Key", value=config.get("API_KEY", ""), type="password")
         CSE_ID = st.text_input("Enter Custom Search Engine ID", value=config.get("CSE_ID", ""), type="password")
 
-        if st.button("Save API Settings"):
+        if st.button("Save API Settings", key="save_api_settings_button"):
             save_config(API_KEY, CSE_ID)
-            st.success("API settings saved!")
+            st.success("🟢 API settings saved!")
+
+    # Model selection for keyword generation
+    st.sidebar.header("Model Selection for Keyword Generation")
+    available_models = get_available_models()
+    selected_model = st.sidebar.selectbox(
+        "Select Model for Keyword Generation:",
+        available_models,
+        key="selected_model",
+    )
+    temperature = st.sidebar.slider("Temperature for Keyword Generation:", 0.0, 1.0, 0.2, 0.1)
 
     # Main app layout
     col1, col2, col3 = st.columns([1, 1, 1])
@@ -367,7 +389,7 @@ def run_lead_generator():
         elif location_type == "Latitude and Longitude":
             location = st.text_input("Enter your location as latitude,longitude:")
         seed_keyword = st.text_input("Enter a seed keyword for variations:")
-        num_keywords = st.number_input("Number of keyword variations", min_value=1, max_value=50, value=10)
+        num_keywords = st.number_input("Number of keyword variations", min_value=1, max_value=50, value=1)
 
     with col2:
         radius = st.slider("Search radius (in meters)", 1000, 50000, 50000, 1000)
@@ -382,7 +404,7 @@ def run_lead_generator():
             folium.Marker(location=location).add_to(m)
             st_folium(m, width=500, height=300)
 
-    if st.button("Generate Leads"):
+    if st.button("🌱 Generate Leads"):
         if not API_KEY or not CSE_ID:
             st.error("Please enter all required API keys in the sidebar.")
         else:
@@ -393,7 +415,8 @@ def run_lead_generator():
             with st.spinner("Generating leads..."):
                 all_results = generate_leads(keywords, f"{location[0]},{location[1]}", API_KEY, CSE_ID, business_type, radius, max_results)
                 append_to_csv(all_results, OUTPUT_FILE)
-                st.success("Leads generated successfully!")  # Add a success message instead of rerunning
+                st.success("🎉 Leads generated successfully!")  # Add a success message instead of rerunning
+                st.balloons()
 
     # Load existing data
     existing_data = load_existing_data(OUTPUT_FILE)
@@ -412,16 +435,25 @@ def run_lead_generator():
         edited_data = AgGrid(existing_data, gridOptions=grid_options, update_mode="value_changed", columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS)
 
     # Save edited data
-    if st.button("Save Changes"):
-        if edited_data['data'].equals(existing_data):
-            st.write("No changes to save.")
-        else:
-            edited_df = pd.DataFrame(edited_data['data'])
-            edited_df.to_csv(OUTPUT_FILE, index=False)
-            st.success("Changes saved!")
+    col4, col5 = st.columns([1, 1])
+    with col4:
+        if st.button("✅ Save Changes"):
+            if edited_data['data'].equals(existing_data):
+                st.write("No changes to save.")
+            else:
+                edited_df = pd.DataFrame(edited_data['data'])
+                edited_df.to_csv(OUTPUT_FILE, index=False)
+                st.success("🟢 Changes saved!")
 
-    # Plot keywords
-    plot_keywords(existing_data)
+    with col5:
+        csv = existing_data.to_csv(index=False)
+        st.download_button(
+            label="📥 Download CSV",
+            data=csv,
+            file_name='compiled_business_listing_data.csv',
+            mime='text/csv',
+            key="download_csv_button"
+        )
 
 # Run the lead generator application
 if __name__ == "__main__":
