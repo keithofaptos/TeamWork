@@ -88,7 +88,7 @@ def load_prompts_from_db():
             prompts = [(prompt, status, None) for prompt, status in prompts]
     return prompts
 
-def generate_prompts(num_prompts=10, model_name='mistral:instruct', temperature=0.7):
+def generate_prompts(num_prompts=3, model_name='mistral:instruct', temperature=0.2):
     new_prompts = []
     example_prompts = [
         """Write a blog post about the importance of local SEO for small retail businesses. Highlight practical tips and real-world examples.""",
@@ -224,20 +224,19 @@ def log_step(step_description):
 def generate_email_content(prompt, model_name='mistral:instruct', temperature=0.4):
     """Generates email content to deliver the prompt of the week."""
     try:
-        # Include temperature in the prompt string
-        prompt_with_temp = f"""Create an email to deliver the following 'Prompt of the Week' to small business owners:
+        # Insert the prompt directly into the instructions with placeholders
+        prompt_with_temp = f"""You are an expert meail marketer and your job is to create an email to deliver the 'Prompt of the Week' to small business owners. 
+The complete prompt will be inserted programmatically into this email at the location marked with 'PROMPT_INSERTION'.
 
-Prompt:
-{prompt}
+Your task is to write the rest of the email, ensuring the content flows naturally with the inserted prompt:
 
-Your task:
-1. Write a brief introduction explaining the purpose of the 'Prompt of the Week'.
-2. Explain who would benefit from this prompt and why.
+1. Start the email with a brief introduction explaining the purpose of the 'Prompt of the Week'.
+2. Then, explain who would benefit from this prompt and why.
 3. Provide simple instructions on how to use the prompt as a user that will copy and paste and maybe tweak it a bit. They will copy it from the email and paste it into the chat interface in ChatGPT https://chatgpt.com/ or whatever AI agent they are using. Tell them to keep a prompt library of their own.
-4. You must include the entire prompt verbatim, in a visually distinct section (e.g., place a row of dashes at the start and end of the entire prompt).
+4. **IMPORTANT:** At the location marked 'PROMPT_INSERTION', the complete prompt will be inserted programmatically. Ensure your email content flows smoothly before and after this insertion point. 
 5. Close with an encouragement to engage with the prompt and a brief sign-off.
 
-The email should be friendly, concise, and encourage recipients to use the prompt. Do not use the prompt to generate content; instead, focus on delivering it directly as it is.
+The email should be friendly, and encourage recipients to use the prompt. Do not use the prompt to generate content; instead, focus on delivering it directly as it is.
 ?t={temperature}"""
 
         response = ollama.generate(
@@ -245,6 +244,10 @@ The email should be friendly, concise, and encourage recipients to use the promp
             prompt=prompt_with_temp  # Use the modified prompt
         )
         email_content = response['response'].strip()
+
+        # Insert the prompt programmatically ONLY ONCE
+        email_content = email_content.replace('PROMPT_INSERTION', f"```\n{prompt}\n```")
+
         return email_content
     except Exception as e:
         st.error(f"Error generating email content: {e}")
@@ -298,7 +301,7 @@ def run_weekly_prompt():
     temperature_prompt = st.sidebar.slider("Temperature for Prompt Generation:", 0.0, 1.0, 0.2, 0.1)
 
     # Button to Generate Prompts
-    if st.button("Generate 10 New Prompts"):
+    if st.button("Generate 3 New Prompts"):
         with st.spinner("Generating prompts..."):
             new_prompts = generate_prompts(
                 model_name=selected_model_prompt,
@@ -376,7 +379,7 @@ def run_weekly_prompt():
             key="selected_model_email",
             index=available_models.index(st.session_state.selected_model_email) if st.session_state.selected_model_email in available_models else 0
         )
-        temperature_email = st.sidebar.slider("Temperature for Email Content:", 0.0, 1.0, 0.4, 0.1)
+        temperature_email = st.sidebar.slider("Temperature for Email Content:", 0.0, 1.0, 0.2, 0.1)
 
         if selected_prompt and st.button("Generate Email Content"):
             st.session_state.selected_prompt = selected_prompt
