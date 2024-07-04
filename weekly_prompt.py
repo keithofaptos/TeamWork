@@ -118,89 +118,56 @@ def generate_prompts(num_prompts=3, model_name='mistral:instruct', temperature=0
             prompt_with_temp = f"""You are an expert AI agent prompt engineer, specializing in generating unique and useful AI agent prompts for small business owners. 
 Your primary functions include content creation, brainstorming ideas, and testing scenarios to address specific business challenges with the prompts.
 The prompts should provide the AI agent they're for, the following information:
-When creating a GPT prompt, several key elements need to be considered to ensure clarity, context, and effective guidance for the model. 
+When creating an AI agent prompt, several key elements need to be considered to ensure clarity, context, and effective guidance for the model. 
 
 Here is a comprehensive list of these elements:
 
-### Core Elements
+### Core Elements of AI Agent Prompt
 
 1. **Role Specification**:
-   - Clearly define the social or occupational role of the GPT, such as "You are a helpful assistant," "mentor," or "partner"【15†source】.
-   - Consider the relevance of the role to the task or query the GPT is expected to handle.
-
+   - Clearly define the social or occupational role of the AI Agent, such as "You are a helpful assistant," "mentor," or "partner".
+   - Consider the relevance of the role to the task or query the AI Agent is expected to handle.
 2. **Purpose and Identity**:
-   - Articulate the core purpose and identity of the GPT, such as providing customer support, generating creative content, or assisting with technical queries【13†source】.
-
+   - Articulate the core purpose and identity of the AI Agent, such as providing customer support, generating creative content, or assisting with technical queries.
 3. **Context and Background**:
-   - Provide detailed context for the task. For example, specify the type of content and the specific topic【13†source】.
-   - Include any necessary background information or specifics upfront to inform the GPT.
-
+   - Provide detailed context for the task. For example, specify the type of content and the specific topic.
+   - Include any necessary background information or specifics upfront to inform the AI Agent.
 4. **Language and Tone**:
-   - Customize the language, tone, and behavioral traits to align with the agent’s role. For example, empathetic language for customer support or formal language for technical advice【13†source】.
-   - Decide on the formality or casualness of the responses【14†source】.
-
+   - Customize the language, tone, and behavioral traits to align with the agent’s role. For example, empathetic language for customer support or formal language for technical advice.
+   - Decide on the formality or casualness of the responses.
 5. **Structure and Clarity**:
-   - Use clear and specific language to outline the desired outcome, format, and style of the output【13†source】.
-   - Employ markup and markdown to structure the prompt, such as headers and separators to distinguish instructions from context【14†source】.
-
+   - Use clear and specific language to outline the desired outcome, format, and style of the output.
+   - Employ markup and markdown to structure the prompt, such as headers and separators to distinguish instructions from context.
 6. **Examples and Pre-filled Responses**:
-   - Include examples in the prompt to illustrate the desired output format or style【14†source】.
-   - Prefill responses with a few words to guide the output in the desired direction【14†source】.
-
+   - Include examples in the prompt to illustrate the desired output format or style.
+   - Prefill responses with a few words to guide the output in the desired direction.
 7. **Iteration and Refinement**:
-   - Write, test, and refine the prompt iteratively based on the model's output. Slight changes in wording or structure can significantly impact responses【13†source】【14†source】.
-
+   - Write, test, and refine the prompt iteratively based on the model's output. Slight changes in wording or structure can significantly impact responses.
 ### Advanced Techniques
-
 1. **Visualization of Thought (VoT)**:
-   - Instruct the GPT to visualize its thought process step-by-step to clarify understanding and context【14†source】.
-
+   - Instruct the AI Agent to visualize its thought process step-by-step to clarify understanding and context.
 2. **Chain of Thought (CoT)**:
-   - Encourage step-by-step thinking to improve the quality of the output by breaking down complex tasks into smaller, manageable steps【14†source】.
-
+   - Encourage step-by-step thinking to improve the quality of the output by breaking down complex tasks into smaller, manageable steps.
 3. **Tree of Thought (ToT)**:
    - Provide a tree-structured process for problem-solving, ensuring all possible paths and decisions are considered.
-
 4. **Chain-of-Abstraction Reasoning**:
-   - Use abstract placeholders and then call domain-specific tools to fill in detailed knowledge, ensuring comprehensive and accurate responses【14†source】.
-
-### Risk and Feasibility Assessment
-
-1. **Feasibility Analysis**:
-   - Assess the implementation feasibility, including technical requirements, maturity of existing technologies, and potential barriers【12†source】.
-
-2. **Resource Identification**:
-   - Identify required resources such as financial investments, human capital, computational infrastructure, and data requirements【12†source】.
-
-3. **Integration and Ethical Evaluation**:
-   - Evaluate the integration with existing technologies and ethical frameworks, ensuring compatibility with current AI architectures and alignment with responsible AI principles【12†source】.
-
-4. **Risk Assessment**:
-   - Identify and assess possible risks including technical challenges, ethical dilemmas, and societal impact. Include considerations for data privacy, bias, and global accessibility【12†source】.
-
+   - Use abstract placeholders and then call domain-specific tools to fill in detailed knowledge, ensuring comprehensive and accurate responses.
 ### Customization and Flexibility
-
 1. **Scenario-Based Instructions**:
-   - Include instructions for different scenarios that the GPT might encounter, preparing it to handle a wide range of interactions effectively【13†source】.
-
+   - Include instructions for different scenarios that the AI Agent might encounter, preparing it to handle a wide range of interactions effectively.
 2. **Balance Specificity and Flexibility**:
-   - Provide specific instructions to guide behavior while allowing flexibility to handle unexpected situations gracefully【13†source】.
-
+   - Provide specific instructions to guide behavior while allowing flexibility to handle unexpected situations gracefully.
 3. **Consistency and Documentation**:
-   - Ensure consistency in the use of formatting elements and thoroughly document prompt design choices, especially when collaborating or sharing prompts with others【14†source】.
-
+   - Ensure consistency in the use of formatting elements and thoroughly document prompt design choices, especially when collaborating or sharing prompts with others.
 ### Practical Considerations
-
 1. **Markup and Special Characters**:
-   - Use markup and markdown for structuring content, ensuring clarity and organization. Escape special characters appropriately to prevent misinterpretation【14†source】.
+   - Use minimal markup for structuring content, ensuring clarity and organization.
 
-You are a helpful assistant and mentor that provides structured, actionable, and creative AI agent prompts a user can copy and paste into ChatGPT.
-
-Here's an example to guide you:
+Here's a random core concept for an agent prompt to guide you:
 
 {random.choice(example_prompts)}
 
-Now, generate a new prompt for a different aspect of small business operations.
+Now, generate a complete prompt for a different aspect of small business operations.
 ?t={temperature}"""  
 
             response = ollama.generate(
@@ -225,8 +192,11 @@ def generate_email_content(prompt, model_name='mistral:instruct', temperature=0.
     """Generates email content to deliver the prompt of the week."""
     try:
         # Insert the prompt directly into the instructions with placeholders
-        prompt_with_temp = f"""You are an expert meail marketer and your job is to create an email to deliver the 'Prompt of the Week' to small business owners. 
-The complete prompt will be inserted programmatically into this email at the location marked with 'PROMPT_INSERTION'.
+        prompt_with_temp = f"""You are an expert email marketer and your job is to create an email to deliver the 'Prompt of the Week' to small business owners. 
+Here is the prompt for your own reference to inform your writing, but do not include it in the email yourself, it's only for your reference:
+{prompt}
+
+The complete prompt will be inserted programmatically into this email at the location marked with 'PROMPT_INSERTION'. Do not include that text as part of your generated response though, it gets done programatically.
 
 Your task is to write the rest of the email, ensuring the content flows naturally with the inserted prompt:
 
@@ -237,6 +207,7 @@ Your task is to write the rest of the email, ensuring the content flows naturall
 5. Close with an encouragement to engage with the prompt and a brief sign-off.
 
 The email should be friendly, and encourage recipients to use the prompt. Do not use the prompt to generate content; instead, focus on delivering it directly as it is.
+
 ?t={temperature}"""
 
         response = ollama.generate(
@@ -287,8 +258,6 @@ def run_weekly_prompt():
     st.session_state.prompts_df = pd.DataFrame(db_prompts, columns=['prompt', 'status', 'approval_date'])
     st.session_state.prompts_df['delete'] = False
 
-    st.title("AI Prompt of the Week Manager")
-
     # Model Selection for Prompt Generation
     st.sidebar.header("Prompt Generation Settings")
     available_models = get_available_models()
@@ -301,7 +270,7 @@ def run_weekly_prompt():
     temperature_prompt = st.sidebar.slider("Temperature for Prompt Generation:", 0.0, 1.0, 0.2, 0.1)
 
     # Button to Generate Prompts
-    if st.button("Generate 3 New Prompts"):
+    if st.button("🎉 Generate 3 New Prompts"):
         with st.spinner("Generating prompts..."):
             new_prompts = generate_prompts(
                 model_name=selected_model_prompt,
@@ -316,7 +285,8 @@ def run_weekly_prompt():
         st.success("New prompts generated and added to the review queue")
 
     # Display DataFrame with prompts
-    st.header("Prompts")
+    st.header("🔢 Prompt Queue")
+    st.write("Review each prompt by clicking on each prompt in the list. Approve them by clicking on the 'Status' setting for each one. Setting it to 'approved' will promote the prompt to the next step, generating the email.")
     if not st.session_state.prompts_df.empty:
         st.session_state.prompts_df['approval_date'] = pd.to_datetime(st.session_state.prompts_df['approval_date'], errors='coerce')
 
@@ -346,7 +316,7 @@ def run_weekly_prompt():
         st.session_state.prompts_df = edited_df.copy()
 
         # Delete selected rows
-        if st.button("Delete Selected Prompts"):
+        if st.button("❌ Delete Selected Prompts"):
             to_delete = st.session_state.prompts_df[st.session_state.prompts_df['delete'] == True]
             if not to_delete.empty:
                 for idx, row in to_delete.iterrows():
@@ -365,7 +335,7 @@ def run_weekly_prompt():
                 save_prompt_to_db(row['prompt'], 'approved', st.session_state.prompts_df.at[i, 'approval_date'])
 
     # Select an approved prompt to process
-    st.header("Select Approved Prompt for Processing")
+    st.header("👍 Select Approved Prompt for Processing")
     approved_prompts = st.session_state.prompts_df[st.session_state.prompts_df['status'] == 'approved']
 
     if not approved_prompts.empty:
@@ -381,7 +351,7 @@ def run_weekly_prompt():
         )
         temperature_email = st.sidebar.slider("Temperature for Email Content:", 0.0, 1.0, 0.2, 0.1)
 
-        if selected_prompt and st.button("Generate Email Content"):
+        if selected_prompt and st.button("✉️ Generate Email Content"):
             st.session_state.selected_prompt = selected_prompt
             st.session_state.email_content = generate_email_content(
                 selected_prompt,
@@ -396,7 +366,7 @@ def run_weekly_prompt():
             st.rerun()
 
     # Email content generation and editing
-    st.header("Email Content")
+    st.header("✉️ Email Content")
     if st.session_state.email_content:
         edited_email = st.text_area("Edit the email content:", st.session_state.email_content, height=300)
         if st.button("Preview Email"):
@@ -412,7 +382,7 @@ def run_weekly_prompt():
             st.rerun()
 
     # Display saved .eml files
-    st.header("Saved Email Files")
+    st.header("📨 Saved Email Files")
     if os.path.exists('emails'):
         for filename in os.listdir('emails'):
             if filename.endswith(".eml"):
@@ -434,6 +404,6 @@ def run_weekly_prompt():
     else:
         st.info("No email files saved yet.")
 
-    st.header("Workflow Log")
+    st.header("⚙️ Workflow Log")
     for log_entry in reversed(st.session_state.workflow_log):
         st.text(log_entry)
