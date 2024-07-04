@@ -283,6 +283,7 @@ def run_weekly_prompt():
             st.session_state.prompts_df = pd.concat([st.session_state.prompts_df, new_prompts_df], ignore_index=True)
             log_step(f"Generated {len(new_prompts)} new prompts")
         st.success("New prompts generated and added to the review queue")
+        st.balloons()
 
     # Display DataFrame with prompts
     st.header("🔢 Prompt Queue")
@@ -362,19 +363,18 @@ def run_weekly_prompt():
 
             # Delete the prompt from the database
             delete_prompt_from_db(selected_prompt) 
-
             st.rerun()
 
     # Email content generation and editing
     st.header("✉️ Email Content")
     if st.session_state.email_content:
         edited_email = st.text_area("Edit the email content:", st.session_state.email_content, height=300)
-        if st.button("Preview Email"):
-            st.write("Email Preview:")
+        if st.button("👀 Preview Email"):
+            st.title("Email Preview:")
             st.write(edited_email)
             log_step("Displayed email preview")
 
-        if st.button("Save Email as .eml"):
+        if st.button("📥 Save Email as .eml"):
             sanitized_filename = sanitize_filename(st.session_state.selected_prompt)
             save_email_as_eml(edited_email, f"{sanitized_filename}.eml")
             log_step(f"Saved email as .eml: {sanitized_filename}.eml")
@@ -393,17 +393,39 @@ def run_weekly_prompt():
                     with open(os.path.join('emails', filename), 'rb') as f:
                         eml_content = f.read()
                     b64 = base64.b64encode(eml_content).decode()
-                    href = f'<a href="data:file/eml;base64,{b64}" download="{filename}">Download</a>'
-                    st.markdown(href, unsafe_allow_html=True)
+                    st.download_button(
+                        label="📥 Download Email",
+                        data=eml_content,
+                        file_name=filename,
+                        mime='message/rfc822',
+                        key=f"download_{filename}"
+                    )
                 with col3:
                     # Add a unique key to the delete button
-                    if st.button(f"Delete", key=f"delete_{filename}"): 
+                    if st.button(f"❌ Delete Email", key=f"delete_{filename}"):
                         os.remove(os.path.join('emails', filename))
                         st.success(f"File {filename} deleted.")
                         st.rerun()
     else:
         st.info("No email files saved yet.")
 
+    # Custom CSS for the terminal-looking log
+    st.markdown("""
+        <style>
+        .terminal {
+            background-color: #000000;
+            color: #00FF00;
+            font-family: monospace;
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+            width: 100%;
+            border-radius: 5px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
+    # Display the log in the styled section
     st.header("⚙️ Workflow Log")
-    for log_entry in reversed(st.session_state.workflow_log):
-        st.text(log_entry)
+    log_entries = "<br>".join(reversed(st.session_state.workflow_log))
+    st.markdown(f"<div class='terminal'>{log_entries}</div>", unsafe_allow_html=True)
