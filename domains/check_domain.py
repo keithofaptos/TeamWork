@@ -21,11 +21,11 @@ def check_domain(domain):
         return f"{domain}: Error ({str(e)})"
 
 def run_domain_checker():
-    st.title("Domain Name Availability Checker")
+    st.title("🤷‍♀️  Domain Name Availability Checker")
     
     text = st.text_area("Enter a block of text containing domain names")
     
-    if st.button("Check Availability"):
+    if st.button("🧐 Check Availability"):
         if text:
             domains = extract_domains(text)
             
@@ -57,6 +57,7 @@ def run_domain_checker():
                 ))
                 
                 st.table(sorted_results)
+                st.balloons()
             else:
                 st.write("No valid domain names found in the provided text.")
         else:
