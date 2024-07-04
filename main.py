@@ -9,6 +9,7 @@ sys.path.append(os.path.join(current_dir, 'leads'))
 sys.path.append(os.path.join(current_dir, 'onboarding'))
 sys.path.append(os.path.join(current_dir, 'domains'))
 sys.path.append(os.path.join(current_dir, 'task_management'))
+sys.path.append(os.path.join(current_dir, 'prompts')) # Add prompts to sys.path
 
 # Set page config before any other Streamlit commands
 st.set_page_config(page_title="TeamWork", page_icon="🐴", layout="wide")
@@ -18,21 +19,36 @@ from lead_generator import run_lead_generator
 from onboarding_workflow import run_onboarding_workflow
 from check_domain import run_domain_checker
 from task_management import run_task_management
+from weekly_prompt import run_weekly_prompt # Import the new function
 
 def main():
     with st.sidebar:
-        st.title("🐴 TeamWork")
-        
+        # Style the app title
+        st.markdown(
+            """
+            <style>
+            .app-title {
+                font-size: 48px!important; /* Adjust font size as needed */
+            }
+            .app-title span {
+                color: orange;
+            }
+            </style>
+            <h1 class="app-title">🐴 Team<span>Work</span></h1>
+            """,
+            unsafe_allow_html=True
+        )
+
         # Create a more visually appealing navigation menu
         selected = option_menu(
             menu_title=None,
-            options=["Leads", "Onboarding", "Domains", "Task Management"],
-            icons=["bullseye", "rocket-takeoff", "globe", "kanban"],
+            options=["Leads", "Prompts", "Onboarding", "Domains", "Task Management" ], # Add "Prompts"
+            icons=["bullseye", "star", "rocket-takeoff", "globe", "kanban"], # Add an icon for "Prompts"
             menu_icon="cast",
             default_index=0,
             styles={
-                "container": {"padding": "0!important", "background-color": "#000"},
-                "icon": {"color": "red", "font-size": "25px"}, 
+                "container": {"padding": "0!important", "background-color": "transparent"},
+                "icon": {"color": "orange", "font-size": "25px"}, 
                 "nav-link": {"font-size": "16px", "color": "#999", "text-align": "left", "margin":"0px", "--hover-color": "#333"},
                 "nav-link-selected": {"background-color": "#333"},
             }
@@ -41,6 +57,10 @@ def main():
     if selected == "Leads":
         st.title("🎯 Lead Generator")
         run_lead_generator()
+
+    elif selected == "Prompts":
+        st.title("✨ Weekly Prompts")
+        run_weekly_prompt()
     
     elif selected == "Onboarding":
         st.title("🚀 Onboarding Workflow")
@@ -53,6 +73,7 @@ def main():
     elif selected == "Task Management":
         st.title("🗂️ Task Management")
         run_task_management()
+
 
 if __name__ == "__main__":
     main()
