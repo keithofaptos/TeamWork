@@ -4,6 +4,7 @@ charset-normalizer
 click
 colorama
 docx
+exceptions
 folium
 geocoder
 idna
