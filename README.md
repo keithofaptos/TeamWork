@@ -12,6 +12,10 @@ TeamWork is an internal tool designed to help team members manage various tasks 
 - **🌐 Domain Checker**: Check the availability of domain names.
 - **🗂️ Task Management**: Manage tasks, assign them to team members, and track their progress.
 
+<img src="https://2acrestudios.com/wp-content/uploads/2024/07/Screenshot-2024-07-05-at-5.21.21 AM-2.png" />
+
+<img src="https://2acrestudios.com/wp-content/uploads/2024/07/Screenshot-2024-07-05-at-5.21.30 AM-2.png" />
+
 ## Installation
 
 1. Clone the repository:
