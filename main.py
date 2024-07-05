@@ -125,7 +125,6 @@ def main():
         run_onboarding_workflow()
 
     elif selected == "Domains":
-        st.title("🌐 Domain Checker")
         run_domain_checker()
 
     elif selected == "Task Management":
