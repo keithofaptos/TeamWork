@@ -23,6 +23,7 @@ def check_domain(domain):
 
 def run_domain_checker():
     st.title("🤷‍♀️  Domain Name Availability Checker")
+    st.write("You can put in as many domain names as you want, in any format, even paste in whole paragraphs of text with domain names somewhere in them.")
     
     text = st.text_area("Enter a block of text containing domain names")
     
