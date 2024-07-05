@@ -5,6 +5,7 @@ import os
 from streamlit_option_menu import option_menu
 from streamlit_extras.buy_me_a_coffee import button
 import json
+from welcome import show_welcome  # Import the welcome page function
 
 # Ensure the current working directory is the root of the project
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -33,6 +34,11 @@ def check_secret_key(file_path, expected_key):
     return False
 
 def main():
+    # Show the welcome page initially
+    if 'page' not in st.session_state:
+        st.session_state.page = 'welcome'
+
+    # Sidebar navigation
     with st.sidebar:
         # Style the app title
         st.markdown(
@@ -53,8 +59,8 @@ def main():
         # Create a more visually appealing navigation menu
         selected = option_menu(
             menu_title=None,
-            options=["Leads", "Prompts", "Onboarding", "Domains", "Task Management"],  # Add "Prompts"
-            icons=["bullseye", "star", "rocket-takeoff", "globe", "kanban"],  # Add an icon for "Prompts"
+            options=["Welcome", "Leads", "Prompts", "Onboarding", "Domains", "Task Management"],  # Add "Prompts"
+            icons=["house", "bullseye", "star", "rocket-takeoff", "globe", "kanban"],  # Add an icon for "Prompts"
             menu_icon="cast",
             default_index=0,
             styles={
@@ -93,10 +99,12 @@ def main():
                 unsafe_allow_html=True,
             )
 
-    if selected == "Leads":
+    # Page routing
+    if selected == "Welcome":
+        show_welcome()
+    elif selected == "Leads":
         st.title("🎯 Lead Generator")
         run_lead_generator()
-
     elif selected == "Prompts":
         submenu = option_menu(
             menu_title="Prompts",
@@ -114,19 +122,15 @@ def main():
         )
 
         if submenu == "Weekly Prompts":
-            st.title("✨ Weekly Prompts")
             run_weekly_prompt()
         elif submenu == "Agent Builder":
             st.title("🤖 Agent Builder")
             run_agent_builder()
-
     elif selected == "Onboarding":
         st.title("🚀 Onboarding Workflow")
         run_onboarding_workflow()
-
     elif selected == "Domains":
         run_domain_checker()
-
     elif selected == "Task Management":
         st.title("🗂️ Task Management")
         run_task_management()
