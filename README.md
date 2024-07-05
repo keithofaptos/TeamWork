@@ -61,10 +61,6 @@ TeamWork is an internal tool designed to help team members manage various tasks 
    - Ensure that you have Ollama installed and running locally. 
    - The application communicates with Ollama through its API.
 
-## Contributing
-
-Feel free to contribute to the project by opening issues or submitting pull requests.
-
 ## License
 
 This project is licensed under the MIT License.
