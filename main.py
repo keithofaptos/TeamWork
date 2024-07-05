@@ -26,6 +26,15 @@ from task_management import run_task_management
 from weekly_prompt import run_weekly_prompt  # Import the new function
 from agent_builder import run_agent_builder  # Import the new function
 
+custom_css = """
+<style>
+body, h1, h2, h3, h4, h5, h6, p {
+    font-family: Helvetica, sans-serif!important;
+    font-size: 18px;
+}
+</style>
+"""
+
 def check_secret_key(file_path, expected_key):
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
@@ -44,8 +53,12 @@ def main():
         st.markdown(
             """
             <style>
+            body, h1, h2, h3, h4, h5, h6, p {
+            font-family: Open Sans, Helvetica, Arial, sans-serif!important;
+            }
             .app-title {
-                font-size: 48px!important; /* Adjust font size as needed */
+                font-size: 44px!important; /* Adjust font size as needed */
+                font-family: Open Sans, Helvetica, Arial, sans-serif!important;
             }
             .app-title span {
                 color: orange;
@@ -68,6 +81,14 @@ def main():
                 "icon": {"color": "orange", "font-size": "25px"},
                 "nav-link": {"font-size": "16px", "color": "#999", "text-align": "left", "margin": "0px", "--hover-color": "#333"},
                 "nav-link-selected": {"background-color": "#333"},
+               "nav-link": {
+                "font-size": "16px", 
+                "color": "#999", 
+                "text-align": "left", 
+                "margin": "0px", 
+                "--hover-color": "#333",
+                "font-family": "Open Sans, Helvetica, Arial, sans-serif"
+            },
             }
         )
 

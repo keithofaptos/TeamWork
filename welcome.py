@@ -13,7 +13,7 @@ def show_welcome():
 
     with col2:
         st.subheader("✨ Prompts")
-        st.write("Spark creativity and efficiency with our AI Agent Builder and Weekly Prompts with an AI Agent Builder and Weekly Prompts for marketing and business purposes.")
+        st.write("Spark creativity and efficiency with AI Agent Builder and Weekly Prompts with an AI Agent Builder and Weekly Prompts for marketing and business purposes.")
 
     with col3:
         st.subheader("🚀 Onboarding Workflow")
