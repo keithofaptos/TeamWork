@@ -7,7 +7,7 @@ TeamWork is an internal tool designed to help team members manage various tasks 
 **Features**
 
 - **🎯 Lead Generator**: Generate business leads based on provided keywords and location.
-- **✨ Weekly Prompts**: Generate, manage, and deploy weekly AI prompts for marketing and business purposes. 
+- **✨ Prompts**: Features both an AI Agent Builder and Weekly Prompts for marketing and business purposes. 
 - **🚀 Onboarding Workflow**: Manage and analyze onboarding workflows using email data.
 - **🌐 Domain Checker**: Check the availability of domain names.
 - **🗂️ Task Management**: Manage tasks, assign them to team members, and track their progress.
@@ -56,4 +56,26 @@ TeamWork is an internal tool designed to help team members manage various tasks 
 - `domains/check_domain.py`: Contains the logic for the Domain Checker tool.
 - `task_management/task_management.py`: Contains the logic for the Task Management tool.
 - `prompts/weekly_prompt.py`: Contains the logic for the Weekly Prompts tool.
+- `ollama_utils.py`: Contains utility functions for interacting with the Ollama API.
 - `requirements.txt`: Lists all the dependencies required for the project.
+
+## Configuration
+
+1. **API Keys:**
+   - You'll need a Google Maps API Key and a Custom Search Engine ID for the Lead Generator.
+   - Instructions on how to obtain these keys are provided within the application's sidebar.
+
+2. **Email Settings:**
+   - Configure your email settings in `prompts/weekly_prompt.py` to enable sending prompts via email.
+
+3. **Ollama:**
+   - Ensure that you have Ollama installed and running locally. 
+   - The application communicates with Ollama through its API.
+
+## Contributing
+
+Feel free to contribute to the project by opening issues or submitting pull requests.
+
+## License
+
+This project is licensed under the MIT License.
