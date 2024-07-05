@@ -48,17 +48,6 @@ TeamWork is an internal tool designed to help team members manage various tasks 
 
 2. Navigate through the different tools using the sidebar.
 
-## File Structure
-
-- `main.py`: The main entry point of the application.
-- `leads/lead_generator.py`: Contains the logic for the Lead Generator tool.
-- `onboarding/onboarding_workflow.py`: Contains the logic for the Onboarding Workflow tool.
-- `domains/check_domain.py`: Contains the logic for the Domain Checker tool.
-- `task_management/task_management.py`: Contains the logic for the Task Management tool.
-- `prompts/weekly_prompt.py`: Contains the logic for the Weekly Prompts tool.
-- `ollama_utils.py`: Contains utility functions for interacting with the Ollama API.
-- `requirements.txt`: Lists all the dependencies required for the project.
-
 ## Configuration
 
 1. **API Keys:**
